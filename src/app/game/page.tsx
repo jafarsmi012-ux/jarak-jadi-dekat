@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Heart, Zap, Coins, Home, MessageCircle, Sprout, Trophy } from 'lucide-react';
 import * as gameApi from '@/lib/gameApi';
@@ -12,7 +12,7 @@ import ChatBox from '@/components/game/ChatBox';
 
 type GameView = 'home' | 'garden' | 'chat' | 'achievements';
 
-export default function GamePage() {
+function GameContent() {
   const searchParams = useSearchParams();
   const coupleCode = searchParams?.get('code');
   const shouldCreate = searchParams?.get('create') === 'true';
@@ -388,5 +388,21 @@ export default function GamePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+
+export default function GamePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin text-6xl mb-4">🏠</div>
+          <p className="text-purple-600 font-medium">Loading...</p>
+        </div>
+      </div>
+    }>
+      <GameContent />
+    </Suspense>
   );
 }

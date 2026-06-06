@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Heart, Sparkles, Home, Users } from 'lucide-react';
+import { Heart, Sparkles, Home as HomeIcon, Users } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Home() {
@@ -37,7 +37,7 @@ export default function Home() {
         {/* Header */}
         <div className="text-center mb-8 pt-8">
           <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-pink-300 to-purple-300 shadow-xl mb-4 animate-pulse-slow">
-            <Home className="w-12 h-12 text-white" />
+            <HomeIcon className="w-12 h-12 text-white" />
           </div>
 
           <h1 className="text-5xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-3">
