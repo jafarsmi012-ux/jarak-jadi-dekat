@@ -33,8 +33,9 @@ export default function ChatBox({ coupleId, currentPlayerName }: ChatBoxProps) {
   }
 
   function subscribeToMessages() {
-    const channel = supabase
-      .channel(`couple_messages_${coupleId}`)
+    const channel = supabase.channel(`couple_messages_${coupleId}`);
+    
+    channel
       .on(
         'postgres_changes',
         {
@@ -50,7 +51,7 @@ export default function ChatBox({ coupleId, currentPlayerName }: ChatBoxProps) {
       .subscribe();
 
     return () => {
-      channel.unsubscribe();
+      supabase.removeChannel(channel);
     };
   }
 
