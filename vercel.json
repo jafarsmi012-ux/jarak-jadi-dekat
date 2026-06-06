@@ -1,0 +1,7 @@
+{
+  "buildCommand": "next build",
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://hweosezdbayrcvchdvgo.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh3ZW9zZXpkYmF5cmN2Y2hkdmdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MzczNDEsImV4cCI6MjA5NjMxMzM0MX0.2Bwicx7uIld9jElR0Mue6AW9bVKaVmcI5mVRk-ch8rg"
+  }
+}
