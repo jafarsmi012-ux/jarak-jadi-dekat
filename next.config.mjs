@@ -4,6 +4,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Disable font optimization to avoid network issues during build
+  optimizeFonts: false,
 };
 
 export default nextConfig;
