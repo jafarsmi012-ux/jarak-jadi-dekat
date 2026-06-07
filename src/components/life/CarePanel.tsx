@@ -18,7 +18,8 @@ export default function CarePanel({ currentPlayer, partner }: CarePanelProps) {
 
   useEffect(() => {
     loadCareActions();
-    subscribeToCareActions();
+    const cleanup = subscribeToCareActions();
+    return cleanup;
   }, [currentPlayer.name]);
 
   async function loadCareActions() {
@@ -30,8 +31,9 @@ export default function CarePanel({ currentPlayer, partner }: CarePanelProps) {
   }
 
   function subscribeToCareActions() {
-    const channel = supabase
-      .channel('care_feed')
+    const channel = supabase.channel('care_feed');
+    
+    channel
       .on(
         'postgres_changes',
         {

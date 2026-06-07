@@ -61,8 +61,8 @@ function LifeGameContent() {
 
   function subscribeToUpdates(playerName: PlayerName, partnerName: PlayerName) {
     // Subscribe to player updates
-    const playerChannel = supabase
-      .channel(`player_${playerName}`)
+    const playerChannel = supabase.channel(`player_${playerName}`);
+    playerChannel
       .on(
         'postgres_changes',
         {
@@ -78,8 +78,8 @@ function LifeGameContent() {
       .subscribe();
 
     // Subscribe to partner updates
-    const partnerChannel = supabase
-      .channel(`player_${partnerName}`)
+    const partnerChannel = supabase.channel(`player_${partnerName}`);
+    partnerChannel
       .on(
         'postgres_changes',
         {
@@ -95,8 +95,8 @@ function LifeGameContent() {
       .subscribe();
 
     // Subscribe to relationship stats
-    const statsChannel = supabase
-      .channel('relationship_stats')
+    const statsChannel = supabase.channel('relationship_stats');
+    statsChannel
       .on(
         'postgres_changes',
         {

@@ -17,10 +17,12 @@ export default function ChatPanel({ currentPlayer, partner }: ChatPanelProps) {
 
   useEffect(() => {
     loadMessages();
-    subscribeToMessages();
+    const cleanup = subscribeToMessages();
     
     // Mark messages as read when opening chat
     markMessagesRead();
+    
+    return cleanup;
   }, []);
 
   useEffect(() => {
@@ -33,8 +35,9 @@ export default function ChatPanel({ currentPlayer, partner }: ChatPanelProps) {
   }
 
   function subscribeToMessages() {
-    const channel = supabase
-      .channel('chat_messages')
+    const channel = supabase.channel('chat_messages');
+    
+    channel
       .on(
         'postgres_changes',
         {

@@ -16,7 +16,8 @@ export default function ActivityPanel({ currentPlayer, partner }: ActivityPanelP
 
   useEffect(() => {
     loadRecentActivities();
-    subscribeToActivities();
+    const cleanup = subscribeToActivities();
+    return cleanup;
   }, []);
 
   async function loadRecentActivities() {
@@ -25,8 +26,9 @@ export default function ActivityPanel({ currentPlayer, partner }: ActivityPanelP
   }
 
   function subscribeToActivities() {
-    const channel = supabase
-      .channel('activities_feed')
+    const channel = supabase.channel('activities_feed');
+    
+    channel
       .on(
         'postgres_changes',
         {
