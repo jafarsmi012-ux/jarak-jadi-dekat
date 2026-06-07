@@ -1,177 +1,185 @@
 "use client";
 
 import { useState } from 'react';
-import { Heart, Sparkles, Home as HomeIcon, Users } from 'lucide-react';
-import Link from 'next/link';
+import { Heart, MapPin, Sparkles } from 'lucide-react';
+
+type Player = 'Tedi' | 'Airin' | null;
 
 export default function Home() {
-  const [showJoinForm, setShowJoinForm] = useState(false);
-  const [coupleCode, setCoupleCode] = useState('');
+  const [selectedPlayer, setSelectedPlayer] = useState<Player>(null);
 
-  const handleCreateNew = () => {
-    // Generate random couple code
-    const code = Array.from({ length: 6 }, () => 
-      'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random() * 32)]
-    ).join('');
-    window.location.href = `/game?code=${code}&create=true`;
-  };
-
-  const handleJoin = () => {
-    if (coupleCode.trim()) {
-      window.location.href = `/game?code=${coupleCode.toUpperCase()}`;
+  const handleSelectPlayer = (player: Player) => {
+    if (player) {
+      localStorage.setItem('current_player', player);
+      window.location.href = '/life';
     }
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
-      {/* Floating decorations */}
+    <main className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 relative overflow-hidden">
+      {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-10 text-pink-200 text-4xl animate-float" style={{ animationDelay: '0s' }}>🏠</div>
-        <div className="absolute top-20 right-20 text-purple-200 text-3xl animate-float" style={{ animationDelay: '1s' }}>💑</div>
-        <div className="absolute bottom-32 left-20 text-blue-200 text-5xl animate-float" style={{ animationDelay: '2s' }}>💕</div>
-        <div className="absolute top-1/2 right-10 text-pink-200 text-2xl animate-float" style={{ animationDelay: '1.5s' }}>🌸</div>
-        <div className="absolute bottom-20 right-1/3 text-purple-200 text-4xl animate-float" style={{ animationDelay: '0.5s' }}>✨</div>
+        <div className="absolute top-10 left-10 text-pink-300 text-6xl animate-float" style={{ animationDelay: '0s' }}>💕</div>
+        <div className="absolute top-1/4 right-20 text-purple-300 text-5xl animate-float" style={{ animationDelay: '1.5s' }}>✨</div>
+        <div className="absolute bottom-1/4 left-1/4 text-blue-300 text-7xl animate-float" style={{ animationDelay: '2s' }}>🏠</div>
+        <div className="absolute top-1/2 right-1/3 text-pink-300 text-4xl animate-float" style={{ animationDelay: '0.8s' }}>🌸</div>
+        <div className="absolute bottom-20 right-10 text-purple-300 text-6xl animate-float" style={{ animationDelay: '1.2s' }}>💑</div>
       </div>
 
-      <div className="relative max-w-2xl mx-auto px-4 py-8 min-h-screen flex flex-col">
+      <div className="relative min-h-screen flex flex-col items-center justify-center px-4 py-8">
         {/* Header */}
-        <div className="text-center mb-8 pt-8">
-          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-pink-300 to-purple-300 shadow-xl mb-4 animate-pulse-slow">
-            <HomeIcon className="w-12 h-12 text-white" />
+        <div className="text-center mb-12 animate-fade-in">
+          <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br from-pink-400 to-purple-400 shadow-2xl mb-6 animate-pulse-slow">
+            <Heart className="w-16 h-16 text-white fill-white" />
           </div>
 
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-3">
-            Virtual Together
+          <h1 className="text-6xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">
+            Tedi & Airin
           </h1>
 
-          <p className="text-purple-600 text-lg mb-2 font-medium">
-            Harvest Moon Style untuk Pasangan LDR
+          <p className="text-2xl text-purple-600 font-semibold mb-2">
+            Living Together
           </p>
 
-          <p className="text-gray-600 text-sm max-w-lg mx-auto">
-            Jalanin hari-hari virtual bareng pasangan. Masak, nonton, ngobrol, dan bangun relationship level kalian! 🏡💕
+          <p className="text-gray-600 max-w-md mx-auto mb-6">
+            Simulasi kehidupan bersama walau jauh. Jalani hari-hari seperti tinggal bareng, saling merawat, dan merasa dekat.
           </p>
+
+          <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-white/80 backdrop-blur-sm border-2 border-purple-200 shadow-lg">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-pink-500" />
+              <span className="font-bold text-pink-600">Bandung</span>
+            </div>
+            <div className="text-purple-400 text-2xl">💕</div>
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-purple-600">Padang</span>
+              <MapPin className="w-5 h-5 text-purple-500" />
+            </div>
+          </div>
         </div>
 
-        {/* Content */}
-        <div className="flex-1">
-          {!showJoinForm ? (
-            <div className="space-y-4 animate-fade-in">
-              <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-purple-100 mb-6">
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center flex-shrink-0">
-                    <Heart className="w-8 h-8 text-purple-500" />
-                  </div>
-                  <div>
-                    <h2 className="font-bold text-gray-800 text-xl mb-2">Cara Main</h2>
-                    <ul className="text-sm text-gray-600 space-y-2">
-                      <li className="flex items-start gap-2">
-                        <span className="text-purple-500 font-bold">1.</span>
-                        <span>Salah satu buat couple baru dan share kode ke pasangan</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-purple-500 font-bold">2.</span>
-                        <span>Pasangan join pakai kode yang sama</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-purple-500 font-bold">3.</span>
-                        <span>Lakuin aktivitas harian: masak, nonton, ngobrol, rawat taman</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-purple-500 font-bold">4.</span>
-                        <span>Naikin relationship level dan unlock achievements!</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+        {/* Player Selection */}
+        {!selectedPlayer ? (
+          <div className="w-full max-w-2xl animate-slide-up">
+            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-purple-200">
+              <h2 className="text-2xl font-bold text-center text-purple-700 mb-6">
+                Siapa kamu hari ini?
+              </h2>
 
-                <div className="grid grid-cols-2 gap-3 text-center text-sm mb-4">
-                  <div className="bg-pink-50 rounded-xl p-3">
-                    <div className="text-2xl mb-1">⚡</div>
-                    <div className="font-semibold text-gray-700">Energy System</div>
-                    <div className="text-xs text-gray-500">Refill tiap hari</div>
-                  </div>
-                  <div className="bg-purple-50 rounded-xl p-3">
-                    <div className="text-2xl mb-1">🪙</div>
-                    <div className="font-semibold text-gray-700">Coins & Shop</div>
-                    <div className="text-xs text-gray-500">Beli item & upgrade</div>
-                  </div>
-                  <div className="bg-blue-50 rounded-xl p-3">
-                    <div className="text-2xl mb-1">🌱</div>
-                    <div className="font-semibold text-gray-700">Garden</div>
-                    <div className="text-xs text-gray-500">Tanam & panen</div>
-                  </div>
-                  <div className="bg-pink-50 rounded-xl p-3">
-                    <div className="text-2xl mb-1">💝</div>
-                    <div className="font-semibold text-gray-700">Level Up</div>
-                    <div className="text-xs text-gray-500">Relationship points</div>
-                  </div>
-                </div>
-
-                <div className="border-t border-purple-100 pt-4">
-                  <p className="text-sm text-purple-500 italic text-center">
-                    "Walau jauh, rasanya kayak tinggal bareng" 💕
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={handleCreateNew}
-                className="w-full py-5 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-xl shadow-lg shadow-purple-200 hover:shadow-xl hover:shadow-purple-300 hover:scale-[1.02] transition-all flex items-center justify-center gap-3"
-              >
-                <Sparkles className="w-6 h-6" />
-                Buat Couple Baru
-              </button>
-
-              <button
-                onClick={() => setShowJoinForm(true)}
-                className="w-full py-5 rounded-2xl bg-white text-purple-600 font-bold text-xl shadow-lg border-2 border-purple-200 hover:border-purple-300 hover:bg-purple-50 hover:scale-[1.02] transition-all flex items-center justify-center gap-3"
-              >
-                <Users className="w-6 h-6" />
-                Join Pakai Kode
-              </button>
-            </div>
-          ) : (
-            <div className="animate-slide-up">
-              <button
-                onClick={() => setShowJoinForm(false)}
-                className="text-sm text-purple-500 hover:text-purple-700 mb-4 flex items-center gap-1"
-              >
-                ← Kembali
-              </button>
-              <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-purple-100">
-                <h2 className="text-2xl font-bold text-purple-700 mb-2">Join Couple</h2>
-                <p className="text-sm text-purple-400 mb-6">Masukkan kode dari pasangan kamu</p>
-                
-                <input
-                  type="text"
-                  placeholder="Masukkan kode (contoh: ABC123)"
-                  value={coupleCode}
-                  onChange={(e) => setCoupleCode(e.target.value.toUpperCase())}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none mb-4 text-center text-lg font-mono uppercase"
-                  maxLength={6}
-                />
-
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Tedi Card */}
                 <button
-                  onClick={handleJoin}
-                  disabled={coupleCode.length < 6}
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl transition-all"
+                  onClick={() => setSelectedPlayer('Tedi')}
+                  className="group relative p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 border-3 border-blue-200 hover:border-blue-400 hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-100"
                 >
-                  Join Sekarang
+                  <div className="absolute top-4 right-4">
+                    <Sparkles className="w-6 h-6 text-blue-400 group-hover:animate-spin" />
+                  </div>
+                  
+                  <div className="text-7xl mb-4 group-hover:scale-110 transition-transform">
+                    👨
+                  </div>
+                  
+                  <div className="text-2xl font-bold text-blue-700 mb-2">
+                    Tedi
+                  </div>
+                  
+                  <div className="flex items-center justify-center gap-2 text-blue-600 mb-3">
+                    <MapPin className="w-4 h-4" />
+                    <span className="text-sm font-medium">Bandung</span>
+                  </div>
+                  
+                  <div className="text-sm text-gray-600">
+                    "Aku siap merawat Airin hari ini 💙"
+                  </div>
+                </button>
+
+                {/* Airin Card */}
+                <button
+                  onClick={() => setSelectedPlayer('Airin')}
+                  className="group relative p-8 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 border-3 border-pink-200 hover:border-pink-400 hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-100"
+                >
+                  <div className="absolute top-4 right-4">
+                    <Sparkles className="w-6 h-6 text-pink-400 group-hover:animate-spin" />
+                  </div>
+                  
+                  <div className="text-7xl mb-4 group-hover:scale-110 transition-transform">
+                    👩
+                  </div>
+                  
+                  <div className="text-2xl font-bold text-pink-700 mb-2">
+                    Airin
+                  </div>
+                  
+                  <div className="flex items-center justify-center gap-2 text-pink-600 mb-3">
+                    <MapPin className="w-4 h-4" />
+                    <span className="text-sm font-medium">Padang</span>
+                  </div>
+                  
+                  <div className="text-sm text-gray-600">
+                    "Aku siap merawat Tedi hari ini 💗"
+                  </div>
                 </button>
               </div>
             </div>
-          )}
-        </div>
+
+            {/* Info Box */}
+            <div className="mt-8 bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-purple-100">
+              <h3 className="font-bold text-purple-700 mb-3 text-center">✨ Fitur Utama</h3>
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="flex items-center gap-2">
+                  <span>🌅</span>
+                  <span>Rutinitas harian lengkap</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>💊</span>
+                  <span>Reminder minum obat</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>🍽️</span>
+                  <span>Makan bareng virtual</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>🤗</span>
+                  <span>Saling merawat & perhatian</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>💬</span>
+                  <span>Real-time chat</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span>😴</span>
+                  <span>Tidur bareng</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="animate-fade-in text-center">
+            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-purple-200">
+              <div className="text-6xl mb-4">
+                {selectedPlayer === 'Tedi' ? '👨' : '👩'}
+              </div>
+              <h2 className="text-2xl font-bold text-purple-700 mb-2">
+                Selamat Datang, {selectedPlayer}!
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Siap memulai hari bersama? 💕
+              </p>
+              <button
+                onClick={() => handleSelectPlayer(selectedPlayer)}
+                className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all"
+              >
+                Mulai Sekarang 🚀
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Footer */}
-        <div className="text-center py-6">
-          <p className="text-xs text-purple-300">
-            Dibuat dengan 💕 untuk pasangan LDR
-          </p>
-          <p className="text-xs text-purple-200 mt-1">
-            Virtual Together v1.0
-          </p>
+        <div className="mt-12 text-center text-sm text-purple-400">
+          <p>💕 Dibuat dengan cinta untuk Tedi & Airin 💕</p>
+          <p className="mt-1 text-xs">Bandung ↔ Padang | Always Connected</p>
         </div>
       </div>
     </main>
